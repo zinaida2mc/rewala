@@ -29,7 +29,8 @@ export function reducer(state = initialState, action: ActionTypeUnion): any {
       };
     }
 
-    case ActionTypes.REGISTRATION_SUCCEEDED: {
+    case ActionTypes.REGISTRATION_SUCCEEDED:
+    case ActionTypes.LOGIN_SUCCEEDED: {
       const { authToken, _id } = action.payload;
 
       return {

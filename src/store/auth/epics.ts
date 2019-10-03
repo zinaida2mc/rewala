@@ -20,11 +20,12 @@ export const redirectOnSetToken: Epic = (action$: Observable<RootActions>) =>
     ignoreElements(),
   );
 
+
+
 export const registrationEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.REGISTRATION),
     map((action) => {
-      console.log(action);
       return AuthRequestActions.registration.action(action.payload);
     }),
   );
@@ -39,6 +40,7 @@ export const registrationFailedEpic: Epic = transferActionEpicFactory(
   Actions.registrationFailed,
 );
 
+
 export const redirectOnRegistrationSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.REGISTRATION_SUCCEEDED),
@@ -46,6 +48,33 @@ export const redirectOnRegistrationSucceededEpic: Epic = (action$: Observable<Ro
     ignoreElements(),
   );
 
+
+
+export const loginEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.LOGIN),
+    map((action) => {
+      return AuthRequestActions.login.action(action.payload);
+    }),
+  );
+
+export const loginSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.loginActionTypes.ACTION_SUCCEEDED,
+  Actions.loginSucceeded,
+);
+
+export const loginFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.loginActionTypes.ACTION_FAILED,
+  Actions.loginFailed,
+);
+
+
+export const redirectOnLoginSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.LOGIN_SUCCEEDED),
+    map(() => navService.navigate('MainNavigator')),
+    ignoreElements(),
+  );
 
 export const epics = [
   redirectOnSetToken,
@@ -55,4 +84,11 @@ export const epics = [
   registrationFailedEpic,
 
   redirectOnRegistrationSucceededEpic,
+
+  loginEpic,
+  loginSucceededEpic,
+  loginFailedEpic,
+
+  redirectOnLoginSucceededEpic,
+
 ];
