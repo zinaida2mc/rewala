@@ -6,10 +6,10 @@ import { User } from '../../shared/interfaces/user';
 import link from '../../shared/link';
 import { GraphQLResponse } from '../../shared/types/graphql';
 import { responseInterceptor } from '../utils/response-interceptor';
+import { LoginInput } from '../../shared/interfaces/login';
 
 class AuthRequestsService {
   registration(userInput: UserInput) {
-    console.log(userInput);
     const operation = {
       query: gql`
         mutation Registration($userInput: UserInput) {
@@ -26,6 +26,26 @@ class AuthRequestsService {
 
     return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ registration: User }>>).pipe(
       responseInterceptor('registration'),
+    );
+  }
+
+  login(userInput: LoginInput) {
+    const operation = {
+      query: gql`
+          mutation Login($userInput: LoginInput) {
+              login(input: $userInput) {
+                  _id
+                  authToken
+                  email
+                  status
+              }
+          }
+      `,
+      variables: { userInput },
+    };
+
+    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ login: User }>>).pipe(
+      responseInterceptor('login'),
     );
   }
 }
