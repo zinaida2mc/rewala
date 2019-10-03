@@ -1,42 +1,20 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import {createStackNavigator, NavigationStackProp} from 'react-navigation-stack';
+import { NavigationContainerComponent } from 'react-navigation';
+import { AppContainer } from './AppNavigator';
+import navService from '../shared/services/nav.service';
+import { Provider } from 'react-redux';
+import store from '../store/index';
 
+const App: React.FC = () => {
+  const setNavigator = (navigatorRef: NavigationContainerComponent) => {
+    navService.setNavigator(navigatorRef);
+  };
 
-type Props = {
-  navigation: NavigationStackProp;
+  return (
+    <Provider store={store}>
+      <AppContainer ref={setNavigator} />
+    </Provider>
+  );
 };
 
-class HomeScreen extends React.Component<Props> {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button title={'Get Out'} onPress={() => this.props.navigation.navigate('NotHome')} />
-      </View>
-    );
-  }
-}
-
-class NotHomeScreen extends React.Component<Props> {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Not Home Screen</Text>
-        <Button title={'Go Home'} onPress={() => this.props.navigation.navigate('Home')} />
-      </View>
-    );
-  }
-}
-
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-  },
-  NotHome: {
-    screen: NotHomeScreen,
-  }
-});
-
-export default createAppContainer(AppNavigator);
+export default App;
