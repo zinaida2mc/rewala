@@ -15,6 +15,7 @@ export const FontSizeVariables = {
   middle: 20,
   h1: 28,
   h2: 24,
+  tiny: 12,
 };
 
 export const FontFamilyVariables = {
