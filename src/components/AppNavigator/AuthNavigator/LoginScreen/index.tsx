@@ -37,20 +37,22 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   FormikActions<InitialValues>;
 
 const LoginScreen: React.FC<Props> = ({ navigation, login }) => {
-  const submitLoginForm = (values: InitialValues) => {
+  const submitLoginForm = (values: InitialValues, {resetForm}: FormikActions<InitialValues>) => {
     const valuesToSend: LoginInput = {
       email: values.email,
       password: values.password,
     };
-    return login(valuesToSend);
+
+    login(valuesToSend);
+    resetForm();
   };
 
   return (
     <KeyboardAwareScrollView enableOnAndroid={true} contentContainerStyle={style.root}>
       <Formik
         initialValues={registrationInitialValues}
-        onSubmit={(values) => {
-          submitLoginForm(values);
+        onSubmit={(values, resetForm) => {
+          submitLoginForm(values, resetForm);
         }}
         render={({ handleSubmit, isValid }) => (
           <View style={style.container}>

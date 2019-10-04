@@ -58,7 +58,7 @@ const RegistrationScreen: React.FC<Props> = ({ navigation, registration }) => {
     navigation.navigate('LoginScreen');
   };
 
-  const submitRegisterForm = (values: InitialValues) => {
+  const submitRegisterForm = (values: InitialValues, {resetForm}: FormikActions<InitialValues>) => {
     const valuesToSend: UserInput = {
       email: values.email,
       password: values.password,
@@ -70,17 +70,19 @@ const RegistrationScreen: React.FC<Props> = ({ navigation, registration }) => {
         notifications: true,
       },
     };
-    return registration(valuesToSend);
+
+    registration(valuesToSend);
+    resetForm();
   };
 
   return (
     <KeyboardAwareScrollView enableOnAndroid={true} contentContainerStyle={style.root}>
       <Formik
         initialValues={registrationInitialValues}
-        onSubmit={(values) => {
-          submitRegisterForm(values);
+        onSubmit={(values, resetForm) => {
+          submitRegisterForm(values, resetForm);
         }}
-        render={({ handleSubmit, handleBlur, values, setFieldValue, error, touched, isValid }) => (
+        render={({ handleSubmit, handleBlur, values, setFieldValue, isValid }) => (
           <View style={style.container}>
             <View>
               <Image source={require('../../../../../assets/logo/alien128.png')} />
