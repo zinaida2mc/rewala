@@ -137,6 +137,8 @@ export const redirectOnLogoutSucceededEpic: Epic = (action$: Observable<RootActi
     ignoreElements(),
   );
 
+
+
 export const resetPasswordEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD),
@@ -160,10 +162,40 @@ export const redirectOnResetPasswordSucceededEpic: Epic = (action$: Observable<R
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD_SUCCEEDED),
     map(() => {
-      navService.navigate('MainNavigator') //next screen 'Enter Code' instead of MainNavigator
+      navService.navigate('EnterCodeScreen')
     }),
     ignoreElements(),
   );
+
+
+
+export const resetPasswordConfirmCodeEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD_CONFIRM_CODE),
+    map((action) => {
+      return AuthRequestActions.resetPasswordConfirmCode.action(action.payload.code);
+    }),
+  );
+
+export const resetPasswordConfirmCodeSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordConfirmCodeActionTypes.ACTION_SUCCEEDED,
+  Actions.resetPasswordConfirmCodeSucceeded,
+);
+
+export const resetPasswordConfirmCodeFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordConfirmCodeActionTypes.ACTION_FAILED,
+  Actions.resetPasswordConfirmCodeFailed,
+);
+
+/**TODO: uncomment and change route when Enter Password Screen will be ready */
+// export const redirectOnResetPasswordConfirmCodeSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+//   action$.pipe(
+//     ofType(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED),
+//     map(() => {
+//       navService.navigate('EnterPasswordScreen')
+//     }),
+//     ignoreElements(),
+//   );
 
 export const epics = [
   redirectOnSetToken,
@@ -195,4 +227,8 @@ export const epics = [
   resetPasswordFailedEpic,
 
   redirectOnResetPasswordSucceededEpic,
+
+  resetPasswordConfirmCodeEpic,
+  resetPasswordConfirmCodeSucceededEpic,
+  resetPasswordConfirmCodeFailedEpic,
 ];

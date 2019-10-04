@@ -27,6 +27,10 @@ export enum ActionTypes {
   RESET_PASSWORD = 'RESET_PASSWORD',
   RESET_PASSWORD_SUCCEEDED = 'RESET_PASSWORD_SUCCEEDED',
   RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED',
+
+  RESET_PASSWORD_CONFIRM_CODE = 'RESET_PASSWORD_CONFIRM_CODE',
+  RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED = 'RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED',
+  RESET_PASSWORD_CONFIRM_CODE_FAILED = 'RESET_PASSWORD_CONFIRM_CODE_FAILED',
 }
 
 export const Actions = {
@@ -51,6 +55,10 @@ export const Actions = {
   resetPassword: (payload: string) => action(ActionTypes.RESET_PASSWORD, payload),
   resetPasswordSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_SUCCEEDED, payload),
   resetPasswordFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_FAILED, payload),
+
+  resetPasswordConfirmCode: (payload: string) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE, payload),
+  resetPasswordConfirmCodeSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED, payload),
+  resetPasswordConfirmCodeFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;
