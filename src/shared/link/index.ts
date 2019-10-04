@@ -13,7 +13,7 @@ const authMiddleware = setContext(() => {
       map((userToken) => {
         return {
           headers: {
-            authorization: `Bearer ${userToken}` || null,
+            Authorization: `Bearer ${userToken}` || null,
           },
         };
       }),
