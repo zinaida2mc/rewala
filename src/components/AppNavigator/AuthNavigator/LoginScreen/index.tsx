@@ -22,7 +22,7 @@ interface InitialValues {
   password: any;
 }
 
-const registrationInitialValues = {
+const loginInitialValues = {
   email: '',
   password: '',
 };
@@ -50,7 +50,7 @@ const LoginScreen: React.FC<Props> = ({ navigation, login }) => {
   return (
     <KeyboardAwareScrollView enableOnAndroid={true} contentContainerStyle={style.root}>
       <Formik
-        initialValues={registrationInitialValues}
+        initialValues={loginInitialValues}
         onSubmit={(values, resetForm) => {
           submitLoginForm(values, resetForm);
         }}
