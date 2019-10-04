@@ -7,6 +7,7 @@ import navService from '../../shared/services/nav.service';
 import { RootActions } from '../index';
 import { Actions, ActionTypes } from './actions';
 import { Actions as AuthRequestActions, ActionTypes as AuthRequestsActionTypes } from '../auth-requests';
+import { authService } from '../../shared/services/auth.service';
 
 
 
@@ -44,7 +45,11 @@ export const registrationFailedEpic: Epic = transferActionEpicFactory(
 export const redirectOnRegistrationSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.REGISTRATION_SUCCEEDED),
-    map(() => navService.navigate('MainNavigator')),
+    map((action) => {
+        const { authToken } = action.payload;
+        authService.setToken(authToken);
+        navService.navigate('MainNavigator')
+    }),
     ignoreElements(),
   );
 
@@ -72,7 +77,11 @@ export const loginFailedEpic: Epic = transferActionEpicFactory(
 export const redirectOnLoginSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.LOGIN_SUCCEEDED),
-    map(() => navService.navigate('MainNavigator')),
+    map((action) => {
+      const { authToken } = action.payload;
+      authService.setToken(authToken);
+      navService.navigate('MainNavigator')
+    }),
     ignoreElements(),
   );
 
