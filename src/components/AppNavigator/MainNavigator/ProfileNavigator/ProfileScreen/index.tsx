@@ -13,11 +13,12 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMe: () => dispatch(Actions.getMe()),
+  logout: () => dispatch(Actions.logout()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
-const ProfileScreen: React.FC<Props> = ({ getMe, userData }) => {
+const ProfileScreen: React.FC<Props> = ({ getMe, userData, logout }) => {
   useEffect(() => {
     getMe();
   }, [getMe]);
@@ -46,6 +47,7 @@ const ProfileScreen: React.FC<Props> = ({ getMe, userData }) => {
           type={'outline'}
           buttonStyle={style.button}
           titleStyle={style.buttonTitle}
+          onPress={logout}
         />
       </View>
     </View>
