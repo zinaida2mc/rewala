@@ -19,6 +19,10 @@ export enum ActionTypes {
   GET_ME = 'GET_ME',
   GET_ME_SUCCEEDED = 'GET_ME_SUCCEEDED',
   GET_ME_FAILED = 'GET_ME_FAILED',
+
+  LOGOUT = 'LOGOUT',
+  LOGOUT_SUCCEEDED = 'LOGOUT_SUCCEEDED',
+  LOGOUT_FAILED = 'LOGOUT_FAILED',
 }
 
 export const Actions = {
@@ -35,6 +39,10 @@ export const Actions = {
   getMe: () => action(ActionTypes.GET_ME),
   getMeSucceeded: (payload: User) => action(ActionTypes.GET_ME_SUCCEEDED, payload),
   getMeFailed: (payload?: any) => action(ActionTypes.GET_ME_FAILED, payload),
+
+  logout: () => action(ActionTypes.LOGOUT),
+  logoutSucceeded: () => action(ActionTypes.LOGOUT_SUCCEEDED),
+  logoutFailed: (payload?: any) => action(ActionTypes.LOGOUT_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

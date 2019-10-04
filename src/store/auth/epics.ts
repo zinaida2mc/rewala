@@ -107,6 +107,36 @@ export const getMeFailedEpic: Epic = transferActionEpicFactory(
   Actions.getMeFailed,
 );
 
+
+
+export const logoutEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.LOGOUT),
+    map(() => {
+      return AuthRequestActions.logout.action();
+    }),
+  );
+
+export const logoutSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.logoutActionTypes.ACTION_SUCCEEDED,
+  Actions.logoutSucceeded,
+);
+
+export const logoutFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.logoutActionTypes.ACTION_FAILED,
+  Actions.logoutFailed,
+);
+
+export const redirectOnLogoutSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.LOGOUT_SUCCEEDED),
+    map(() => {
+      authService.removeToken();
+      navService.navigate('AuthNavigator')
+    }),
+    ignoreElements(),
+  );
+
 export const epics = [
   redirectOnSetToken,
 
@@ -125,4 +155,10 @@ export const epics = [
   getMeEpic,
   getMeSucceededEpic,
   getMeFailedEpic,
+
+  logoutEpic,
+  logoutSucceededEpic,
+  logoutFailedEpic,
+
+  redirectOnLogoutSucceededEpic,
 ];
