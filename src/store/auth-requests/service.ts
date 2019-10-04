@@ -7,6 +7,7 @@ import link from '../../shared/link';
 import { GraphQLResponse } from '../../shared/types/graphql';
 import { responseInterceptor } from '../utils/response-interceptor';
 import { LoginInput } from '../../shared/interfaces/login';
+import { AuthToken } from '../../shared/interfaces/token';
 
 class AuthRequestsService {
   registration(userInput: UserInput) {
@@ -71,6 +72,19 @@ class AuthRequestsService {
     return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ me: User }>>).pipe(
       responseInterceptor('me'),
     );
+  }
+
+  logout() {
+    const operation = {
+      query: gql`
+          mutation {
+              logout(input: {FCMToken: ""})
+          }
+      `,
+    };
+
+    return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ logout: AuthToken }>>)
+      .pipe(responseInterceptor('logout'));
   }
 }
 
