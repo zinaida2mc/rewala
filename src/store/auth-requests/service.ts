@@ -101,6 +101,20 @@ class AuthRequestsService {
       .pipe(responseInterceptor('resetPassword'));
   }
 
+  resetPasswordConfirmCode(userInput: string) {
+    const operation = {
+      query: gql`
+          mutation ResetPasswordConfirmCode($userInput: String) {
+              resetPasswordConfirmCode(resetPasswordCode: $userInput)
+          }
+      `,
+      variables: { userInput },
+    };
+
+    return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ resetPasswordConfirmCode: string }>>)
+      .pipe(responseInterceptor('resetPasswordConfirmCode'));
+  }
+
 }
 
 export const authRequestsService = new AuthRequestsService();
