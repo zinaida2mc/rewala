@@ -137,6 +137,34 @@ export const redirectOnLogoutSucceededEpic: Epic = (action$: Observable<RootActi
     ignoreElements(),
   );
 
+export const resetPasswordEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD),
+    map((action) => {
+      return AuthRequestActions.resetPassword.action(action.payload.email);
+    }),
+  );
+
+export const resetPasswordSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordActionTypes.ACTION_SUCCEEDED,
+  Actions.resetPasswordSucceeded,
+);
+
+export const resetPasswordFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordActionTypes.ACTION_FAILED,
+  Actions.resetPasswordFailed,
+);
+
+
+export const redirectOnResetPasswordSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD_SUCCEEDED),
+    map(() => {
+      navService.navigate('MainNavigator') //next screen 'Enter Code' instead of MainNavigator
+    }),
+    ignoreElements(),
+  );
+
 export const epics = [
   redirectOnSetToken,
 
@@ -161,4 +189,10 @@ export const epics = [
   logoutFailedEpic,
 
   redirectOnLogoutSucceededEpic,
+
+  resetPasswordEpic,
+  resetPasswordSucceededEpic,
+  resetPasswordFailedEpic,
+
+  redirectOnResetPasswordSucceededEpic,
 ];

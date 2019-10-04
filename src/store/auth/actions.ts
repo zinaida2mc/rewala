@@ -23,6 +23,10 @@ export enum ActionTypes {
   LOGOUT = 'LOGOUT',
   LOGOUT_SUCCEEDED = 'LOGOUT_SUCCEEDED',
   LOGOUT_FAILED = 'LOGOUT_FAILED',
+
+  RESET_PASSWORD = 'RESET_PASSWORD',
+  RESET_PASSWORD_SUCCEEDED = 'RESET_PASSWORD_SUCCEEDED',
+  RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED',
 }
 
 export const Actions = {
@@ -43,6 +47,10 @@ export const Actions = {
   logout: () => action(ActionTypes.LOGOUT),
   logoutSucceeded: () => action(ActionTypes.LOGOUT_SUCCEEDED),
   logoutFailed: (payload?: any) => action(ActionTypes.LOGOUT_FAILED, payload),
+
+  resetPassword: (payload: string) => action(ActionTypes.RESET_PASSWORD, payload),
+  resetPasswordSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_SUCCEEDED, payload),
+  resetPasswordFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;
