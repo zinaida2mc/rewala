@@ -19,3 +19,13 @@ export const validatePassword = (values: any) => {
     return null;
   }
 };
+
+export const validateCode = (values: string) => {
+  if(!values) {
+    return 'Required'
+  } else if(values.length < 8) {
+    return 'Too short'
+  } else {
+    return null;
+  }
+};
