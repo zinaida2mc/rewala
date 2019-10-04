@@ -7,19 +7,24 @@ import { style } from './style';
 import { authService } from '../../../shared/services/auth.service';
 
 import { Actions } from '../../../store/auth/actions';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-const LoadingScreen: React.FC = () => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setAccessToken: (token: string | null) => dispatch(Actions.setAccessToken(token || undefined)),
+});
+
+type Props = ReturnType<typeof mapDispatchToProps>;
+
+const LoadingScreen: React.FC<Props> = ({ setAccessToken }) => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const token$ = authService.getToken();
 
-    const subscription = token$.subscribe(dispatch(Actions.setAccessToken()));
+    const subscription = token$.subscribe(setAccessToken);
 
     return () => {
       subscription.unsubscribe();
@@ -33,4 +38,7 @@ const LoadingScreen: React.FC = () => {
   );
 };
 
-export default LoadingScreen;
+export default connect(
+  null,
+  mapDispatchToProps,
+)(LoadingScreen);
