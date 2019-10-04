@@ -14,9 +14,11 @@ import { authService } from '../../shared/services/auth.service';
 export const redirectOnSetToken: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.SET_ACCESS_TOKEN),
-    filter((action) => !action.payload),
-    map(() => {
-      return navService.navigate('AuthNavigator');
+    map(  (action) => {
+      if (!action.payload) {
+        return navService.navigate('AuthNavigator');
+      }
+      return navService.navigate('MainNavigator');
     }),
     ignoreElements(),
   );
