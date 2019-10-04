@@ -1,3 +1,6 @@
+import { ProfileInput } from './registration';
+
+
 export enum UserStatus {
   DELETED = 'DELETED',
   INACTIVE = 'INACTIVE',
@@ -15,4 +18,5 @@ export interface User {
   authToken: string | null;
   status?: UserStatus;
   roles?: Roles;
+  profile: ProfileInput
 }
