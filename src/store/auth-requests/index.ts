@@ -31,11 +31,19 @@ import {
   reducer as logoutReducer,
 } from './nested-states/logout';
 
+import {
+  Actions as resetPassword,
+  ActionTypes as resetPasswordActionTypes,
+  epic as resetPasswordEpic,
+  reducer as resetPasswordReducer,
+} from './nested-states/reset-password';
+
 export const Actions = {
   registration,
   login,
   getMe,
   logout,
+  resetPassword,
 };
 
 export const ActionTypes = {
@@ -43,6 +51,7 @@ export const ActionTypes = {
   loginActionTypes,
   getMeActionTypes,
   logoutActionTypes,
+  resetPasswordActionTypes,
 };
 
 export const reducer = combineReducers({
@@ -50,6 +59,7 @@ export const reducer = combineReducers({
   login: loginReducer,
   getMe: getMeReducer,
   logout: logoutReducer,
+  resetPassword: resetPasswordReducer,
 });
 
 export type ActionTypeUnion = ActionType<typeof reducer>;
@@ -59,6 +69,7 @@ export const epics = [
   loginEpic,
   getMeEpic,
   logoutEpic,
+  resetPasswordEpic,
 ];
 
 export type State = StateType<typeof reducer>;

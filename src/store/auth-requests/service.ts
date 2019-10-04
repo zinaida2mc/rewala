@@ -86,6 +86,21 @@ class AuthRequestsService {
     return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ logout: AuthToken }>>)
       .pipe(responseInterceptor('logout'));
   }
+
+  resetPassword(userInput: string) {
+    const operation = {
+      query: gql`
+          mutation ResetPassword($userInput: String) {
+              resetPassword(email: $userInput)
+          }
+      `,
+      variables: { userInput },
+    };
+
+    return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ resetPassword: string }>>)
+      .pipe(responseInterceptor('resetPassword'));
+  }
+
 }
 
 export const authRequestsService = new AuthRequestsService();
