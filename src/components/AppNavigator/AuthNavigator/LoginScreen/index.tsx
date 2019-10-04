@@ -89,6 +89,12 @@ const LoginScreen: React.FC<Props> = ({ navigation, login }) => {
                 disabledStyle={style.disabledButton}
                 onPress={handleSubmit}
               />
+              <Button
+                title={'FORGOT PASSWORD?'}
+                type={'clear'}
+                titleStyle={style.buttonClear}
+                onPress={() => navigation.navigate('ResetPasswordScreen')}
+              />
             </View>
 
             <View style={style.textContainer}>
