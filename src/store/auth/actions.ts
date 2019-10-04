@@ -2,6 +2,7 @@ import { action, ActionType } from 'typesafe-actions';
 
 import { UserInput } from '../../shared/interfaces/registration';
 import { LoginInput } from '../../shared/interfaces/login';
+import { User } from '../../shared/interfaces/user';
 
 
 export enum ActionTypes {
@@ -14,6 +15,10 @@ export enum ActionTypes {
   LOGIN = 'LOGIN',
   LOGIN_SUCCEEDED = 'LOGIN_SUCCEEDED',
   LOGIN_FAILED = 'LOGIN_FAILED',
+
+  GET_ME = 'GET_ME',
+  GET_ME_SUCCEEDED = 'GET_ME_SUCCEEDED',
+  GET_ME_FAILED = 'GET_ME_FAILED',
 }
 
 export const Actions = {
@@ -26,6 +31,10 @@ export const Actions = {
   login: (payload: LoginInput) => action(ActionTypes.LOGIN, payload),
   loginSucceeded: (payload: any) => action(ActionTypes.LOGIN_SUCCEEDED, payload),
   loginFailed: (payload?: any) => action(ActionTypes.LOGIN_FAILED, payload),
+
+  getMe: () => action(ActionTypes.GET_ME),
+  getMeSucceeded: (payload: User) => action(ActionTypes.GET_ME_SUCCEEDED, payload),
+  getMeFailed: (payload?: any) => action(ActionTypes.GET_ME_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

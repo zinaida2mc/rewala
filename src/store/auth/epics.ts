@@ -87,6 +87,26 @@ export const redirectOnLoginSucceededEpic: Epic = (action$: Observable<RootActio
     ignoreElements(),
   );
 
+
+
+export const getMeEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.GET_ME),
+    map(() => {
+      return AuthRequestActions.getMe.action();
+    }),
+  );
+
+export const getMeSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.getMeActionTypes.ACTION_SUCCEEDED,
+  Actions.getMeSucceeded,
+);
+
+export const getMeFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.getMeActionTypes.ACTION_FAILED,
+  Actions.getMeFailed,
+);
+
 export const epics = [
   redirectOnSetToken,
 
@@ -102,4 +122,7 @@ export const epics = [
 
   redirectOnLoginSucceededEpic,
 
+  getMeEpic,
+  getMeSucceededEpic,
+  getMeFailedEpic,
 ];

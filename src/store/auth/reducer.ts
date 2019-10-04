@@ -7,6 +7,7 @@ const initialState: AuthState = {
   authorizedUserId: null,
   token: null,
   phone: null,
+  userData: null,
 };
 
 export function reducer(state = initialState, action: ActionTypeUnion): any {
@@ -39,6 +40,17 @@ export function reducer(state = initialState, action: ActionTypeUnion): any {
         authorizedUserId: _id,
         token: authToken
       }
+    }
+
+    case ActionTypes.GET_ME_SUCCEEDED: {
+      const { _id } = action.payload;
+
+      return {
+        ...state,
+        userData: action.payload,
+        authorizedUserId: _id,
+        isAuthorized: true,
+      };
     }
 
     default:
