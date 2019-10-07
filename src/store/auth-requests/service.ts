@@ -8,6 +8,8 @@ import { GraphQLResponse } from '../../shared/types/graphql';
 import { responseInterceptor } from '../utils/response-interceptor';
 import { LoginInput } from '../../shared/interfaces/login';
 import { AuthToken } from '../../shared/interfaces/token';
+import { ChangePasswordInput } from '../../shared/interfaces/changePassword';
+import { ResetPasswordConfirmInput } from '../../shared/interfaces/resetPasswordConfirm';
 
 class AuthRequestsService {
   registration(userInput: UserInput) {
@@ -113,6 +115,20 @@ class AuthRequestsService {
 
     return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ resetPasswordConfirmCode: string }>>)
       .pipe(responseInterceptor('resetPasswordConfirmCode'));
+  }
+
+  resetPasswordConfirm(userInput: ResetPasswordConfirmInput) {
+    const operation = {
+      query: gql`
+          mutation ResetPasswordConfirm($userInput: ResetPasswordConfirmInput) {
+              resetPasswordConfirm(input: $userInput)
+          }
+      `,
+      variables: { userInput },
+    };
+
+    return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ resetPasswordConfirm: ResetPasswordConfirmInput }>>)
+      .pipe(responseInterceptor('resetPasswordConfirm'));
   }
 
 }
