@@ -4,13 +4,10 @@ import { style } from './style';
 import { CommonButton } from '../../../../../shared/components/common-button/index';
 import { Dispatch } from 'redux';
 import { Actions } from '../../../../../store/auth/actions';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/index';
 import { NavigationStackProp } from 'react-navigation-stack';
-
-const mapStateToProps = (state: RootState) => ({
-  userData: state.auth.userData,
-});
+import { getUserData } from '../../../../../store/auth/selectors';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMe: () => dispatch(Actions.getMe()),
@@ -21,12 +18,14 @@ type NavProps = {
   navigation: NavigationStackProp;
 };
 
-type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps> & NavProps;
+type Props = ReturnType<typeof mapDispatchToProps>  & NavProps;
 
-const ProfileScreen: React.FC<Props> = ({ navigation, getMe, userData, logout }) => {
+const ProfileScreen: React.FC<Props> = ({ navigation, getMe, logout }) => {
   useEffect(() => {
     getMe();
   }, [getMe]);
+
+  const userData = useSelector((state: RootState) => getUserData(state));
 
   if (!userData) {
     return <Text>L O A D I N G</Text>;
@@ -67,6 +66,6 @@ const ProfileScreen: React.FC<Props> = ({ navigation, getMe, userData, logout })
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(ProfileScreen);
