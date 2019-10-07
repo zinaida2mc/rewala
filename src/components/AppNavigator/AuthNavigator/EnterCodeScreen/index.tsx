@@ -7,15 +7,12 @@ import { Button, Text } from 'react-native-elements';
 import { style } from './style';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Actions } from '../../../../store/auth/actions';
 import { validateCode } from '../../../../shared/validators/validators';
 import { RootState } from '../../../../store/index';
-
-const mapStateToProps = (state: RootState) => ({
-  email: state.auth.email,
-});
+import { getEmail } from '../../../../store/auth/selectors';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPasswordConfirmCode: (userInput: string) => dispatch(Actions.resetPasswordConfirmCode(userInput)),
@@ -35,13 +32,12 @@ type NavProps = {
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
   NavProps &
   FormikProps<InitialValues> &
   FormikActions<InitialValues>;
 
-const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode, email, resetPassword }) => {
-
+const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode, resetPassword }) => {
+  const email = useSelector((state: RootState) => getEmail(state));
   const submitEnterCodeForm = (values: InitialValues) => {
     const valuesToSend: any = {
       code: values.code,
@@ -114,6 +110,6 @@ const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode
 };
 
 export default connect(
-  mapStateToProps,
+  null,
 mapDispatchToProps,
 )(EnterCodeScreen);

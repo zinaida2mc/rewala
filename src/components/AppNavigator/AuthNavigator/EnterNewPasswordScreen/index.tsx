@@ -7,16 +7,13 @@ import { Button, Text } from 'react-native-elements';
 import { style } from './style';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Actions } from '../../../../store/auth/actions';
 import { validatePassword } from '../../../../shared/validators/validators';
 import { RootState } from '../../../../store/index';
 import { ResetPasswordConfirmInput } from '../../../../shared/interfaces/resetPasswordConfirm';
-
-const mapStateToProps = (state: RootState) => ({
-  code: state.auth.code,
-});
+import { getCode, getUserData } from '../../../../store/auth/selectors';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPasswordConfirm: (userInput: ResetPasswordConfirmInput) => dispatch(Actions.resetPasswordConfirm(userInput)),
@@ -37,12 +34,13 @@ type NavProps = {
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
   NavProps &
   FormikProps<InitialValues> &
   FormikActions<InitialValues>;
 
-const EnterNewPasswordScreen: React.FC<Props> = ({ navigation, code, resetPasswordConfirm }) => {
+const EnterNewPasswordScreen: React.FC<Props> = ({ navigation, resetPasswordConfirm }) => {
+
+  const code = useSelector((state: RootState) => getCode(state));
 
   const submitEnterNewPasswordForm = (values: InitialValues) => {
     const valuesToSend: any = {
@@ -114,6 +112,6 @@ const EnterNewPasswordScreen: React.FC<Props> = ({ navigation, code, resetPasswo
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(EnterNewPasswordScreen);
