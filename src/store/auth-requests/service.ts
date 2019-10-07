@@ -131,6 +131,22 @@ class AuthRequestsService {
       .pipe(responseInterceptor('resetPasswordConfirm'));
   }
 
+  changePassword(userInput: ChangePasswordInput) {
+    const operation = {
+      query: gql`
+          mutation ChangePassword($userInput: ChangePasswordInput) {
+              changePassword(input: $userInput) {
+                  email
+              }
+          }
+      `,
+      variables: { userInput },
+    };
+
+    return from(execute(link, operation) as unknown as Subscribable<GraphQLResponse<{ changePassword: ChangePasswordInput }>>)
+      .pipe(responseInterceptor('changePassword'));
+  }
+
 }
 
 export const authRequestsService = new AuthRequestsService();
