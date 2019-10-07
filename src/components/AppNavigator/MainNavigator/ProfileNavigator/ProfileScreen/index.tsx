@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import { Actions } from '../../../../../store/auth/actions';
 import { connect } from 'react-redux';
 import { RootState } from '../../../../../store/index';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 const mapStateToProps = (state: RootState) => ({
   userData: state.auth.userData,
@@ -16,9 +17,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(Actions.logout()),
 });
 
-type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
+type NavProps = {
+  navigation: NavigationStackProp;
+};
 
-const ProfileScreen: React.FC<Props> = ({ getMe, userData, logout }) => {
+type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps> & NavProps;
+
+const ProfileScreen: React.FC<Props> = ({ navigation, getMe, userData, logout }) => {
   useEffect(() => {
     getMe();
   }, [getMe]);
@@ -39,6 +44,13 @@ const ProfileScreen: React.FC<Props> = ({ getMe, userData, logout }) => {
         <Text style={style.userInfo}>
           Phone: {userData.profile.countryCode} {userData.profile.phone}
         </Text>
+        <CommonButton
+          title={'Change Password'}
+          type={'outline'}
+          buttonStyle={style.buttonChangePass}
+          titleStyle={style.buttonTitle}
+          onPress={() => navigation.navigate('ChangePasswordScreen')}
+        />
       </View>
 
       <View>

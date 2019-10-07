@@ -25,5 +25,12 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
   },
   buttonTitle: {
     color: ColorVariables.darkTeal,
+  },
+  buttonChangePass: {
+    backgroundColor: ColorVariables.warning,
+    alignSelf: 'center',
+    minWidth: 200,
+    maxWidth: 250,
+    marginTop: 15,
   }
 });
