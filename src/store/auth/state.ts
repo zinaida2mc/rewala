@@ -8,4 +8,5 @@ export interface AuthState {
   phone: Phone | null;
   userData: User | null;
   code: string | null;
+  email: string | null;
 }
