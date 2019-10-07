@@ -8,6 +8,7 @@ import { connect, useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/index';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { getUserData } from '../../../../../store/auth/selectors';
+import { getIsGetMeLoading } from '../../../../../store/auth-requests/selectors';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMe: () => dispatch(Actions.getMe()),
@@ -26,8 +27,9 @@ const ProfileScreen: React.FC<Props> = ({ navigation, getMe, logout }) => {
   }, [getMe]);
 
   const userData = useSelector((state: RootState) => getUserData(state));
+  const isGetMeLoading = useSelector((state: RootState) => getIsGetMeLoading(state));
 
-  if (!userData) {
+  if (isGetMeLoading || !userData) {
     return <Text>L O A D I N G</Text>;
   }
 
