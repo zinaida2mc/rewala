@@ -4,6 +4,7 @@ import { UserInput } from '../../shared/interfaces/registration';
 import { LoginInput } from '../../shared/interfaces/login';
 import { User } from '../../shared/interfaces/user';
 import { ResetPasswordConfirmInput } from '../../shared/interfaces/resetPasswordConfirm';
+import { ChangePasswordInput } from '../../shared/interfaces/changePassword';
 
 
 export enum ActionTypes {
@@ -36,6 +37,10 @@ export enum ActionTypes {
   RESET_PASSWORD_CONFIRM = 'RESET_PASSWORD_CONFIRM',
   RESET_PASSWORD_CONFIRM_SUCCEEDED = 'RESET_PASSWORD_CONFIRM_SUCCEEDED',
   RESET_PASSWORD_CONFIRM_FAILED = 'RESET_PASSWORD_CONFIRM_FAILED',
+
+  CHANGE_PASSWORD = 'CHANGE_PASSWORD',
+  CHANGE_PASSWORD_SUCCEEDED = 'CHANGE_PASSWORD_SUCCEEDED',
+  CHANGE_PASSWORD_FAILED = 'CHANGE_PASSWORD_FAILED',
 }
 
 export const Actions = {
@@ -68,6 +73,10 @@ export const Actions = {
   resetPasswordConfirm: (payload: ResetPasswordConfirmInput) => action(ActionTypes.RESET_PASSWORD_CONFIRM, payload),
   resetPasswordConfirmSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_SUCCEEDED, payload),
   resetPasswordConfirmFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_FAILED, payload),
+
+  changePassword: (payload: ChangePasswordInput) => action(ActionTypes.CHANGE_PASSWORD, payload),
+  changePasswordSucceeded: (payload?: any) => action(ActionTypes.CHANGE_PASSWORD_SUCCEEDED, payload),
+  changePasswordFailed: (payload?: any) => action(ActionTypes.CHANGE_PASSWORD_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

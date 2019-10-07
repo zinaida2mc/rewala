@@ -225,6 +225,35 @@ export const redirectOnResetPasswordConfirmSucceededEpic: Epic = (action$: Obser
     ignoreElements(),
   );
 
+
+export const changePasswordEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.CHANGE_PASSWORD),
+    map((action) => {
+      return AuthRequestActions.changePassword.action(action.payload);
+    }),
+  );
+
+export const changePasswordSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.changePasswordActionTypes.ACTION_SUCCEEDED,
+  Actions.changePasswordSucceeded,
+);
+
+export const changePasswordFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.changePasswordActionTypes.ACTION_FAILED,
+  Actions.changePasswordFailed,
+);
+
+
+export const redirectOnChangePasswordSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.CHANGE_PASSWORD_SUCCEEDED),
+    map(() => {
+      navService.navigate('ProfileScreen')
+    }),
+    ignoreElements(),
+  );
+
 export const epics = [
   redirectOnSetToken,
 
@@ -267,4 +296,10 @@ export const epics = [
   resetPasswordConfirmFailedEpic,
 
   redirectOnResetPasswordConfirmSucceededEpic,
+
+  changePasswordEpic,
+  changePasswordSucceededEpic,
+  changePasswordFailedEpic,
+
+  redirectOnChangePasswordSucceededEpic,
 ];
