@@ -1,20 +1,19 @@
 import { Epic, ofType } from 'redux-observable';
 import { Observable } from 'rxjs';
 import { ignoreElements, map } from 'rxjs/operators';
+
 import { transferActionEpicFactory } from '../utils/transfer-action';
 import navService from '../../shared/services/nav.service';
-
-import { RootActions } from '../index';
-import { Actions, ActionTypes } from './actions';
 import { Actions as AuthRequestActions, ActionTypes as AuthRequestsActionTypes } from '../auth-requests';
 import { authService } from '../../shared/services/auth.service';
 
-
+import { RootActions } from '../index';
+import { Actions, ActionTypes } from './actions';
 
 export const redirectOnSetToken: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.SET_ACCESS_TOKEN),
-    map(  (action) => {
+    map((action) => {
       if (!action.payload) {
         return navService.navigate('AuthNavigator');
       }
@@ -22,8 +21,6 @@ export const redirectOnSetToken: Epic = (action$: Observable<RootActions>) =>
     }),
     ignoreElements(),
   );
-
-
 
 export const registrationEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
@@ -43,19 +40,16 @@ export const registrationFailedEpic: Epic = transferActionEpicFactory(
   Actions.registrationFailed,
 );
 
-
 export const redirectOnRegistrationSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.REGISTRATION_SUCCEEDED),
     map((action) => {
-        const { authToken } = action.payload;
-        authService.setToken(authToken);
-        navService.navigate('MainNavigator')
+      const { authToken } = action.payload;
+      authService.setToken(authToken);
+      navService.navigate('MainNavigator');
     }),
     ignoreElements(),
   );
-
-
 
 export const loginEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
@@ -75,26 +69,21 @@ export const loginFailedEpic: Epic = transferActionEpicFactory(
   Actions.loginFailed,
 );
 
-
 export const redirectOnLoginSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.LOGIN_SUCCEEDED),
     map((action) => {
       const { authToken } = action.payload;
       authService.setToken(authToken);
-      navService.navigate('MainNavigator')
+      navService.navigate('MainNavigator');
     }),
     ignoreElements(),
   );
 
-
-
 export const getMeEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.GET_ME),
-    map(() => {
-      return AuthRequestActions.getMe.action();
-    }),
+    map(() => AuthRequestActions.getMe.action()),
   );
 
 export const getMeSucceededEpic: Epic = transferActionEpicFactory(
@@ -107,14 +96,10 @@ export const getMeFailedEpic: Epic = transferActionEpicFactory(
   Actions.getMeFailed,
 );
 
-
-
 export const logoutEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.LOGOUT),
-    map(() => {
-      return AuthRequestActions.logout.action();
-    }),
+    map(() => AuthRequestActions.logout.action()),
   );
 
 export const logoutSucceededEpic: Epic = transferActionEpicFactory(
@@ -132,19 +117,15 @@ export const redirectOnLogoutSucceededEpic: Epic = (action$: Observable<RootActi
     ofType(ActionTypes.LOGOUT_SUCCEEDED),
     map(() => {
       authService.removeToken();
-      navService.navigate('AuthNavigator')
+      navService.navigate('AuthNavigator');
     }),
     ignoreElements(),
   );
 
-
-
 export const resetPasswordEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD),
-    map((action) => {
-      return AuthRequestActions.resetPassword.action(action.payload.email);
-    }),
+    map((action) => AuthRequestActions.resetPassword.action(action.payload.email)),
   );
 
 export const resetPasswordSucceededEpic: Epic = transferActionEpicFactory(
@@ -157,17 +138,14 @@ export const resetPasswordFailedEpic: Epic = transferActionEpicFactory(
   Actions.resetPasswordFailed,
 );
 
-
 export const redirectOnResetPasswordSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD_SUCCEEDED),
     map(() => {
-      navService.navigate('EnterCodeScreen')
+      navService.navigate('EnterCodeScreen');
     }),
     ignoreElements(),
   );
-
-
 
 export const resetPasswordConfirmCodeEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
@@ -191,12 +169,10 @@ export const redirectOnResetPasswordConfirmCodeSucceededEpic: Epic = (action$: O
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED),
     map(() => {
-      navService.navigate('EnterNewPasswordScreen')
+      navService.navigate('EnterNewPasswordScreen');
     }),
     ignoreElements(),
   );
-
-
 
 export const resetPasswordConfirmEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
@@ -220,11 +196,10 @@ export const redirectOnResetPasswordConfirmSucceededEpic: Epic = (action$: Obser
   action$.pipe(
     ofType(ActionTypes.RESET_PASSWORD_CONFIRM_SUCCEEDED),
     map(() => {
-      navService.navigate('LoginScreen')
+      navService.navigate('LoginScreen');
     }),
     ignoreElements(),
   );
-
 
 export const changePasswordEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
@@ -244,12 +219,11 @@ export const changePasswordFailedEpic: Epic = transferActionEpicFactory(
   Actions.changePasswordFailed,
 );
 
-
 export const redirectOnChangePasswordSucceededEpic: Epic = (action$: Observable<RootActions>) =>
   action$.pipe(
     ofType(ActionTypes.CHANGE_PASSWORD_SUCCEEDED),
     map(() => {
-      navService.navigate('ProfileScreen')
+      navService.navigate('ProfileScreen');
     }),
     ignoreElements(),
   );
