@@ -11,9 +11,15 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Actions } from '../../../../store/auth/actions';
 import { validateCode } from '../../../../shared/validators/validators';
+import { RootState } from '../../../../store/index';
+
+const mapStateToProps = (state: RootState) => ({
+  email: state.auth.email,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPasswordConfirmCode: (userInput: string) => dispatch(Actions.resetPasswordConfirmCode(userInput)),
+  resetPassword: (userInput: string) => dispatch(Actions.resetPassword(userInput)),
 });
 
 interface InitialValues {
@@ -29,11 +35,12 @@ type NavProps = {
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   NavProps &
   FormikProps<InitialValues> &
   FormikActions<InitialValues>;
 
-const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode }) => {
+const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode, email, resetPassword }) => {
 
   const submitEnterCodeForm = (values: InitialValues) => {
     const valuesToSend: any = {
@@ -86,7 +93,7 @@ const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode
                 title={'RESEND CODE'}
                 type={'clear'}
                 titleStyle={style.buttonClear}
-                onPress={() => navigation.navigate('LoginScreen')}
+                onPress={() => resetPassword({email: email})}
               />
             </View>
 
@@ -96,17 +103,17 @@ const EnterCodeScreen: React.FC<Props> = ({ navigation, resetPasswordConfirmCode
                 title={'Log in'}
                 type={'clear'}
                 titleStyle={style.buttonClear}
-                // onPress={() => resetPassword} //need to improve
-              />
-            </View>
-          </View>
-        )}
-      />
-    </KeyboardAwareScrollView>
-  );
+                onPress={() => navigation.navigate('LoginScreen')}
+        />
+      </View>
+    </View>
+  )}
+/>
+</KeyboardAwareScrollView>
+);
 };
 
 export default connect(
-  null,
-  mapDispatchToProps,
+  mapStateToProps,
+mapDispatchToProps,
 )(EnterCodeScreen);
