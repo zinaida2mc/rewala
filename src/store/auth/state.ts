@@ -7,4 +7,5 @@ export interface AuthState {
   token: string | null;
   phone: Phone | null;
   userData: User | null;
+  code: string | null;
 }

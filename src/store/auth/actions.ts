@@ -3,6 +3,7 @@ import { action, ActionType } from 'typesafe-actions';
 import { UserInput } from '../../shared/interfaces/registration';
 import { LoginInput } from '../../shared/interfaces/login';
 import { User } from '../../shared/interfaces/user';
+import { ResetPasswordConfirmInput } from '../../shared/interfaces/resetPasswordConfirm';
 
 
 export enum ActionTypes {
@@ -31,6 +32,10 @@ export enum ActionTypes {
   RESET_PASSWORD_CONFIRM_CODE = 'RESET_PASSWORD_CONFIRM_CODE',
   RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED = 'RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED',
   RESET_PASSWORD_CONFIRM_CODE_FAILED = 'RESET_PASSWORD_CONFIRM_CODE_FAILED',
+
+  RESET_PASSWORD_CONFIRM = 'RESET_PASSWORD_CONFIRM',
+  RESET_PASSWORD_CONFIRM_SUCCEEDED = 'RESET_PASSWORD_CONFIRM_SUCCEEDED',
+  RESET_PASSWORD_CONFIRM_FAILED = 'RESET_PASSWORD_CONFIRM_FAILED',
 }
 
 export const Actions = {
@@ -59,6 +64,10 @@ export const Actions = {
   resetPasswordConfirmCode: (payload: string) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE, payload),
   resetPasswordConfirmCodeSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED, payload),
   resetPasswordConfirmCodeFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_FAILED, payload),
+
+  resetPasswordConfirm: (payload: ResetPasswordConfirmInput) => action(ActionTypes.RESET_PASSWORD_CONFIRM, payload),
+  resetPasswordConfirmSucceeded: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_SUCCEEDED, payload),
+  resetPasswordConfirmFailed: (payload?: any) => action(ActionTypes.RESET_PASSWORD_CONFIRM_FAILED, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

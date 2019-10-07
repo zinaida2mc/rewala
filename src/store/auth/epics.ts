@@ -1,6 +1,6 @@
 import { Epic, ofType } from 'redux-observable';
 import { Observable } from 'rxjs';
-import { filter, ignoreElements, map } from 'rxjs/operators';
+import { ignoreElements, map } from 'rxjs/operators';
 import { transferActionEpicFactory } from '../utils/transfer-action';
 import navService from '../../shared/services/nav.service';
 
@@ -187,15 +187,43 @@ export const resetPasswordConfirmCodeFailedEpic: Epic = transferActionEpicFactor
   Actions.resetPasswordConfirmCodeFailed,
 );
 
-/**TODO: uncomment and change route when Enter Password Screen will be ready */
-// export const redirectOnResetPasswordConfirmCodeSucceededEpic: Epic = (action$: Observable<RootActions>) =>
-//   action$.pipe(
-//     ofType(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED),
-//     map(() => {
-//       navService.navigate('EnterPasswordScreen')
-//     }),
-//     ignoreElements(),
-//   );
+export const redirectOnResetPasswordConfirmCodeSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD_CONFIRM_CODE_SUCCEEDED),
+    map(() => {
+      navService.navigate('EnterNewPasswordScreen')
+    }),
+    ignoreElements(),
+  );
+
+
+
+export const resetPasswordConfirmEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD_CONFIRM),
+    map((action) => {
+      return AuthRequestActions.resetPasswordConfirm.action(action.payload);
+    }),
+  );
+
+export const resetPasswordConfirmSucceededEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordConfirmActionTypes.ACTION_SUCCEEDED,
+  Actions.resetPasswordConfirmSucceeded,
+);
+
+export const resetPasswordConfirmFailedEpic: Epic = transferActionEpicFactory(
+  AuthRequestsActionTypes.resetPasswordConfirmActionTypes.ACTION_FAILED,
+  Actions.resetPasswordConfirmFailed,
+);
+
+export const redirectOnResetPasswordConfirmSucceededEpic: Epic = (action$: Observable<RootActions>) =>
+  action$.pipe(
+    ofType(ActionTypes.RESET_PASSWORD_CONFIRM_SUCCEEDED),
+    map(() => {
+      navService.navigate('LoginScreen')
+    }),
+    ignoreElements(),
+  );
 
 export const epics = [
   redirectOnSetToken,
@@ -231,4 +259,12 @@ export const epics = [
   resetPasswordConfirmCodeEpic,
   resetPasswordConfirmCodeSucceededEpic,
   resetPasswordConfirmCodeFailedEpic,
+
+  redirectOnResetPasswordConfirmCodeSucceededEpic,
+
+  resetPasswordConfirmEpic,
+  resetPasswordConfirmSucceededEpic,
+  resetPasswordConfirmFailedEpic,
+
+  redirectOnResetPasswordConfirmSucceededEpic,
 ];

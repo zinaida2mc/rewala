@@ -8,6 +8,7 @@ const initialState: AuthState = {
   token: null,
   phone: null,
   userData: null,
+  code: null,
 };
 
 export function reducer(state = initialState, action: ActionTypeUnion): any {
@@ -56,6 +57,14 @@ export function reducer(state = initialState, action: ActionTypeUnion): any {
     case ActionTypes.LOGOUT_SUCCEEDED: {
       return {
         ...initialState,
+      }
+    }
+
+    case ActionTypes.RESET_PASSWORD_CONFIRM_CODE: {
+      const { code } = action.payload;
+      return {
+        ...state,
+        code
       }
     }
 
