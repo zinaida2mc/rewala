@@ -13,9 +13,6 @@ export const ProfileNavigator = createStackNavigator(
     },
     ChangePasswordScreen: {
       screen: ChangePasswordScreen,
-      navigationOptions: {
-        header: null,
-      },
     },
   },
   {
