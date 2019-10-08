@@ -14,7 +14,6 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
     marginBottom: 20,
   },
   fieldsWrapper: {
-    flex: 1,
     justifyContent: 'center',
     marginBottom: 25,
     marginTop: 25,
