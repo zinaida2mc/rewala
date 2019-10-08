@@ -1,14 +1,21 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { style } from './style';
-import { CommonButton } from '../../../../../shared/components/common-button/index';
-import { Dispatch } from 'redux';
-import { Actions } from '../../../../../store/auth/actions';
-import { connect, useSelector } from 'react-redux';
-import { RootState } from '../../../../../store/index';
 import { NavigationStackProp } from 'react-navigation-stack';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+
+import { Dispatch } from 'redux';
+import { connect, useSelector } from 'react-redux';
+
+import { CommonButton } from '../../../../../shared/components/common-button/index';
+
+import { Actions } from '../../../../../store/auth/actions';
+import { RootState } from '../../../../../store/index';
 import { getUserData } from '../../../../../store/auth/selectors';
 import { getIsGetMeLoading } from '../../../../../store/auth-requests/selectors';
+
+import { style } from './style';
+import { ColorVariables } from '../../../../../styles/variables';
+
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMe: () => dispatch(Actions.getMe()),
@@ -19,25 +26,33 @@ type NavProps = {
   navigation: NavigationStackProp;
 };
 
-type Props = ReturnType<typeof mapDispatchToProps>  & NavProps;
+type Props = ReturnType<typeof mapDispatchToProps> & NavProps;
 
 const ProfileScreen: React.FC<Props> = ({ navigation, getMe, logout }) => {
   useEffect(() => {
     getMe();
   }, [getMe]);
 
+  // const isGetMeLoading = useSelector((state: RootState) => getIsGetMeLoading(state));
+  // if(isGetMeLoading) {
+  //   return <Text>load</Text>
+  // }
   const userData = useSelector((state: RootState) => getUserData(state));
-  const isGetMeLoading = useSelector((state: RootState) => getIsGetMeLoading(state));
 
-  if (isGetMeLoading || !userData) {
-    return <Text>L O A D I N G</Text>;
+
+  if (!userData) {
+    return <AnimatedCircularProgress
+      size={100}
+      width={10}
+      fill={100}
+      style={style.circularProgress}
+      tintColor={ColorVariables.lightTeal}
+    />
   }
 
   return (
-    <View style={style.root}>
-      <View>
-        <Text style={style.header}>Welcome to your profile!</Text>
-      </View>
+    <View style={style.container}>
+      <Text style={style.header}>Welcome to your profile!</Text>
 
       <View>
         <Text style={style.userInfo}>Name: {userData.profile.fullName}</Text>
@@ -54,15 +69,13 @@ const ProfileScreen: React.FC<Props> = ({ navigation, getMe, logout }) => {
         />
       </View>
 
-      <View>
-        <CommonButton
-          title={'Log out'}
-          type={'outline'}
-          buttonStyle={style.button}
-          titleStyle={style.buttonTitle}
-          onPress={logout}
-        />
-      </View>
+      <CommonButton
+        title={'Log out'}
+        type={'outline'}
+        buttonStyle={style.button}
+        titleStyle={style.buttonTitle}
+        onPress={logout}
+      />
     </View>
   );
 };

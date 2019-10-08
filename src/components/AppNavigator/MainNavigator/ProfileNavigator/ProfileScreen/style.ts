@@ -2,12 +2,17 @@ import { StyleSheet } from 'react-native';
 import { ColorVariables, FontFamilyVariables, FontSizeVariables } from '../../../../../styles/variables';
 
 export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
-  root: {
+  container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 20,
+    // paddingVertical: 20,
+    // paddingHorizontal: 10,
+  },
+  circularProgress: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   header: {
     fontFamily: FontFamilyVariables.medium,
