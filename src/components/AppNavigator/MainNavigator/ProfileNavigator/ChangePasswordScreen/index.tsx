@@ -10,6 +10,7 @@ import { Dispatch } from 'redux';
 import { Actions } from '../../../../../store/auth/actions';
 import { validatePassword } from '../../../../../shared/validators/validators';
 import { ChangePasswordInput } from '../../../../../shared/interfaces/changePassword';
+import { ColorVariables } from '../../../../../styles/variables';
 
 
 
@@ -59,7 +60,6 @@ const ChangePasswordScreen: React.FC<Props> = ({ changePassword }) => {
               name={'oldPassword'}
               placeholder={'Old Password'}
               validate={validatePassword}
-              keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
               secureTextEntry={true} //doesn't work with visible-password
               component={CommonInput}
             />
@@ -68,7 +68,6 @@ const ChangePasswordScreen: React.FC<Props> = ({ changePassword }) => {
               name={'newPassword'}
               placeholder={'New Password'}
               validate={validatePassword}
-              keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
               secureTextEntry={true} //doesn't work with visible-password
               component={CommonInput}
             />
@@ -77,7 +76,6 @@ const ChangePasswordScreen: React.FC<Props> = ({ changePassword }) => {
               name={'confirmPassword'}
               placeholder={'Confirm Password'}
               /**TODO: add validation on confirm password */
-              keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
               secureTextEntry={true} //doesn't work with visible-password
               component={CommonInput}
             />
@@ -87,7 +85,7 @@ const ChangePasswordScreen: React.FC<Props> = ({ changePassword }) => {
               type={'outline'}
               buttonStyle={style.button}
               containerStyle={style.buttonContainer}
-              titleStyle={style.buttonTitle}
+              color={ColorVariables.white}
               disabled={!isValid}
               disabledStyle={style.disabledButton}
               onPress={handleSubmit}
