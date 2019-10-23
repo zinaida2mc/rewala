@@ -2,23 +2,24 @@ import React from 'react';
 import { View, Platform, Image } from 'react-native';
 import { Field, Formik, FormikActions, FormikProps } from 'formik';
 import { Button, Text, CheckBox } from 'react-native-elements';
-import { style } from './style';
-import { CommonInput } from '../../../../shared/components/common-input/index';
-import { CountryInput } from './country-input/index';
-import { PhoneInput } from './phone-input/index';
-import { CommonButton } from '../../../../shared/components/common-button/index';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { Actions } from '../../../../store/auth/actions';
+
+import { CommonInput } from '../../../../shared/components/common-input';
+import { CommonButton } from '../../../../shared/components/common-button';
 import { UserInput } from '../../../../shared/interfaces/registration';
+
 import {
   required,
   validateEmail,
   validatePassword,
 } from '../../../../shared/validators/validators';
 
+import { style } from './style';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   registration: (userInput: UserInput) => dispatch(Actions.registration(userInput)),
@@ -96,18 +97,21 @@ const RegistrationScreen: React.FC<Props> = ({ navigation, registration }) => {
                 validate={required}
               />
 
-              <View style={style.phoneInputContainer}>
+              <View style={style.phoneInputContainerWrapper}>
                 <Field
                   name={'countryCode'}
                   placeholder={'code'}
-                  component={CountryInput}
+                  inputContainerStyle={style.countryCodeInputContainer}
+                  component={CommonInput}
                   validate={required}
                 />
 
                 <Field
                   name={'phone'}
                   placeholder={'phone'}
-                  component={PhoneInput}
+                  inputContainerStyle={style.phoneInputContainer}
+                  component={CommonInput}
+                  errorStyle={style.phoneInputErrorMessage}
                   validate={required}
                 />
               </View>
@@ -116,7 +120,7 @@ const RegistrationScreen: React.FC<Props> = ({ navigation, registration }) => {
                 name={'email'}
                 placeholder={'Enter email'}
                 keyboardType={'email-address'}
-                textContentType={'emailAddress'} //only iOS?
+                textContentType={'emailAddress'}
                 component={CommonInput}
                 validate={validateEmail}
               />
@@ -125,7 +129,7 @@ const RegistrationScreen: React.FC<Props> = ({ navigation, registration }) => {
                 name={'password'}
                 placeholder={'Password'}
                 keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
-                secureTextEntry={true} //doesn't work with visible-password
+                secureTextEntry={true}
                 component={CommonInput}
                 validate={validatePassword}
               />
