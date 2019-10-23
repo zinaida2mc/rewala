@@ -12,6 +12,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
   const {
     containerStyle: containerStyleProp,
     inputContainerStyle: inputContainerStyleProp,
+    errorStyle: errorStyleProp,
     field: { name, value },
     form: { handleChange, handleBlur, errors, touched },
     ...restProps
@@ -28,6 +29,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
    */
   const containerStyle = { ...style.container, ...(containerStyleProp as any) };
   const inputContainerStyle = { ...style.inputContainer, ...(inputContainerStyleProp as any) };
+  const errorStyle = { ...style.errorMessageStyle, ...(errorStyleProp as any) };
 
   return (
     <ElementsInput
@@ -38,7 +40,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
       onChangeText={handleChange(name)}
       onBlur={handleBlur(name)}
       errorMessage={touchedField ? errorMessage : ''}
-      errorStyle={style.errorMessageStyle}
+      errorStyle={errorStyle}
       {...restProps}
     />
   );
