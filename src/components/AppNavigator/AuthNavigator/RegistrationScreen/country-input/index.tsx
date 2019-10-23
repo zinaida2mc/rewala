@@ -1,11 +1,10 @@
 import React from 'react';
 import { Input as ElementsInput, InputProps } from 'react-native-elements';
-
 import { FieldProps } from 'formik';
 import get from 'lodash/get';
+
+import { ColorVariables } from '../../../../../styles/variables';
 import { style } from './style';
-import { ColorVariables, FontFamilyVariables, FontSizeVariables } from '../../../../../styles/variables';
-import { StyleSheet } from 'react-native';
 
 type Props = FieldProps & InputProps;
 
@@ -20,6 +19,7 @@ export const CountryInput: React.FC<Props> = React.memo((props) => {
 
   const error = get(errors, name);
   const touchedField = get(touched, name);
+  const isError = error && touchedField;
 
   const errorMessage = typeof error === 'string' ? error : '';
 
@@ -33,35 +33,13 @@ export const CountryInput: React.FC<Props> = React.memo((props) => {
     <ElementsInput
       value={value && String(value)}
       containerStyle={containerStyle}
-      inputContainerStyle={error && touchedField ? styles.inputErrorContainer : inputContainerStyle}
-      placeholderTextColor={error && touchedField ? ColorVariables.error : ColorVariables.lightTeal}
+      inputContainerStyle={{ ...inputContainerStyle, ...(isError ? style.inputErrorContainer : {}) }}
+      placeholderTextColor={isError ? ColorVariables.error : ColorVariables.lightTeal}
       onChangeText={handleChange(name)}
       onBlur={handleBlur(name)}
       errorMessage={touchedField ? errorMessage : ''}
-      errorStyle={styles.errorMessageStyle}
+      errorStyle={style.errorMessageStyle}
       {...restProps}
     />
   );
-});
-
-const styles = StyleSheet.create({
-  inputErrorContainer: {
-    borderRadius: 25,
-    borderBottomRightRadius: 3,
-    borderTopRightRadius: 3,
-    borderWidth: 1,
-    borderColor: ColorVariables.error,
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    height: 50,
-    maxWidth: 70
-  },
-  errorMessageStyle: {
-    color: ColorVariables.error,
-    fontFamily: FontFamilyVariables.bold,
-    fontSize: FontSizeVariables.small,
-    marginTop: -2,
-    marginBottom: -2,
-  },
 });

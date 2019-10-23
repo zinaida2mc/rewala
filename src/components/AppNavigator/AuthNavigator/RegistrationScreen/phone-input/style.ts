@@ -1,12 +1,7 @@
-import { StyleSheet, ViewStyle } from 'react-native';
-import { ColorVariables } from '../../../../../styles/variables';
+import { StyleSheet } from 'react-native';
+import { ColorVariables, FontFamilyVariables, FontSizeVariables } from '../../../../../styles/variables';
 
-interface Style {
-  container: ViewStyle;
-  inputContainer: ViewStyle;
-}
-
-const styleInput: Style = {
+export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
   container: {
     flex: 1,
   },
@@ -23,6 +18,25 @@ const styleInput: Style = {
     maxWidth: 155,
     marginLeft: -50,
   },
-};
-
-export const style = StyleSheet.create(styleInput);
+  inputErrorContainer: {
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: ColorVariables.error,
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    borderBottomLeftRadius: 3,
+    borderTopLeftRadius: 3,
+    maxWidth: 155,
+    marginLeft: -50,
+  },
+  errorMessageStyle: {
+    color: ColorVariables.error,
+    fontFamily: FontFamilyVariables.bold,
+    fontSize: FontSizeVariables.small,
+    marginLeft: -50,
+    marginTop: -2,
+    marginBottom: -2,
+  },
+});
