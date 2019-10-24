@@ -56,23 +56,11 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
     flexDirection: 'row'
   },
   countryCodeInputContainer: {
-    borderRadius: 25,
-    borderWidth: 1,
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    maxHeight: 50,
     borderBottomRightRadius: 3,
     borderTopRightRadius: 3,
     maxWidth: 70,
   },
   phoneInputContainer: {
-    borderRadius: 25,
-    borderWidth: 1,
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    maxHeight: 50,
     borderBottomLeftRadius: 3,
     borderTopLeftRadius: 3,
     maxWidth: 155,
@@ -80,7 +68,5 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
   },
   phoneInputErrorMessage: {
     marginLeft: -50,
-    marginTop: -2,
-    marginBottom: -2,
   },
 });
