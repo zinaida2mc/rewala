@@ -1,17 +1,21 @@
 import React from 'react';
 import { Image, Platform, View } from 'react-native';
 import { Field, Formik, FormikActions, FormikProps } from 'formik';
-import { CommonInput } from '../../../../shared/components/common-input/index';
-import { CommonButton } from '../../../../shared/components/common-button/index';
 import { Button, Text } from 'react-native-elements';
-import { style } from './style';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { Actions } from '../../../../store/auth/actions';
+
+import { CommonInput } from '../../../../shared/components/common-input';
+import { CommonButton } from '../../../../shared/components/common-button';
 import { LoginInput } from '../../../../shared/interfaces/login';
+
 import { required, validateEmail } from '../../../../shared/validators/validators';
+
+import { style } from './style';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   login: (userInput: LoginInput) => dispatch(Actions.login(userInput)),
@@ -65,7 +69,7 @@ const LoginScreen: React.FC<Props> = ({ navigation, login }) => {
                 name={'email'}
                 placeholder={'Enter email'}
                 keyboardType={'email-address'}
-                textContentType={'emailAddress'} //only iOS?
+                textContentType={'emailAddress'}
                 validate={validateEmail}
                 component={CommonInput}
               />
@@ -73,7 +77,7 @@ const LoginScreen: React.FC<Props> = ({ navigation, login }) => {
               <Field
                 name={'password'}
                 placeholder={'Password'}
-                secureTextEntry={true} //doesn't work with keyboardType visible-password
+                secureTextEntry={true}
                 keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
                 validate={required}
                 component={CommonInput}
