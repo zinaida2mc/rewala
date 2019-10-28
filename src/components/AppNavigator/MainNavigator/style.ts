@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { FontFamilyVariables, FontSizeVariables } from '../../../styles/variables';
+import { ColorVariables, FontSizeVariables } from '../../../styles/variables';
 
 export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
-  tabBarLabel: {
-    fontSize: FontSizeVariables.small,
-    fontFamily: FontFamilyVariables.medium,
+  tabBarStyle: {
+    borderTopColor: ColorVariables.darkTeal,
+    paddingVertical: 10,
   },
-  tabBarIcon: {
-    fontSize: FontSizeVariables.h2,
+  tabBarLabel: {
+    fontSize: FontSizeVariables.semiSmall,
   },
 });

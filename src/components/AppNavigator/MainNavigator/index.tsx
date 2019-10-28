@@ -5,6 +5,9 @@ import { DashboardNavigator } from './DashboardNavigator';
 import { ProfileNavigator } from './ProfileNavigator';
 import { SettingsNavigator } from './SettingsNavigator';
 
+import { ColorVariables } from '../../../styles/variables';
+import { style } from './style';
+
 export const MainNavigator = createBottomTabNavigator(
   {
     DashboardScreen: {
@@ -28,5 +31,11 @@ export const MainNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: 'DashboardScreen',
+    tabBarOptions: {
+      activeTintColor: ColorVariables.darkTeal,
+      inactiveTintColor: ColorVariables.lightTeal,
+      labelStyle: style.tabBarLabel ,
+      style: style.tabBarStyle,
+    },
   },
 );
