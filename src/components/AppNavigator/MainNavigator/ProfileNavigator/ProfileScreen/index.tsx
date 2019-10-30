@@ -6,16 +6,14 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Dispatch } from 'redux';
 import { connect, useSelector } from 'react-redux';
 
-import { CommonButton } from '../../../../../shared/components/common-button/index';
+import { CommonButton } from '../../../../../shared/components/common-button';
 
 import { Actions } from '../../../../../store/auth/actions';
-import { RootState } from '../../../../../store/index';
+import { RootState } from '../../../../../store';
 import { getUserData } from '../../../../../store/auth/selectors';
-import { getIsGetMeLoading } from '../../../../../store/auth-requests/selectors';
 
 import { style } from './style';
 import { ColorVariables } from '../../../../../styles/variables';
-
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMe: () => dispatch(Actions.getMe()),
@@ -33,21 +31,18 @@ const ProfileScreen: React.FC<Props> = ({ navigation, getMe, logout }) => {
     getMe();
   }, [getMe]);
 
-  // const isGetMeLoading = useSelector((state: RootState) => getIsGetMeLoading(state));
-  // if(isGetMeLoading) {
-  //   return <Text>load</Text>
-  // }
   const userData = useSelector((state: RootState) => getUserData(state));
 
-
   if (!userData) {
-    return <AnimatedCircularProgress
-      size={100}
-      width={10}
-      fill={100}
-      style={style.circularProgress}
-      tintColor={ColorVariables.lightTeal}
-    />
+    return (
+      <AnimatedCircularProgress
+        size={100}
+        width={10}
+        fill={100}
+        style={style.circularProgress}
+        tintColor={ColorVariables.lightTeal}
+      />
+    );
   }
 
   return (

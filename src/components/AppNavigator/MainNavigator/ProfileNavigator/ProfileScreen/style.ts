@@ -6,8 +6,7 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    // paddingVertical: 20,
-    // paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   circularProgress: {
     flex: 1,
