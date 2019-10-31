@@ -27,9 +27,8 @@ class AuthRequestsService {
       variables: { userInput },
     };
 
-    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ registration: User }>>).pipe(
-      responseInterceptor('registration'),
-    );
+    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ registration: User }>>)
+      .pipe(responseInterceptor('registration'));
   }
 
   login(userInput: LoginInput) {
@@ -37,7 +36,7 @@ class AuthRequestsService {
       query: gql`
         mutation Login($userInput: LoginInput) {
           login(input: $userInput) {
-#            _id
+            _id
             authToken
             email
             status
@@ -47,9 +46,8 @@ class AuthRequestsService {
       variables: { userInput },
     };
 
-    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ login: User }>>).pipe(
-      responseInterceptor('login'),
-    );
+    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ login: User }>>)
+      .pipe(responseInterceptor('login'));
   }
 
   getMe(): Observable<User> {
@@ -71,9 +69,8 @@ class AuthRequestsService {
       `,
     };
 
-    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ me: User }>>).pipe(
-      responseInterceptor('me'),
-    );
+    return from((execute(link, operation) as unknown) as Subscribable<GraphQLResponse<{ me: User }>>)
+      .pipe(responseInterceptor('me'));
   }
 
   logout() {
