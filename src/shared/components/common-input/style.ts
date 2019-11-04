@@ -16,6 +16,10 @@ export const style = StyleSheet.create<StyleSheet.NamedStyles<any>>({
     maxHeight: 50,
     maxWidth: 250,
   },
+  inputStyle: {
+    color: ColorVariables.darkTeal,
+    fontSize: FontSizeVariables.semiSmall,
+  },
   inputErrorContainer: {
     borderColor: ColorVariables.error,
   },

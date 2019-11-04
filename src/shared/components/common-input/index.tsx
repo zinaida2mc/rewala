@@ -12,6 +12,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
   const {
     containerStyle: containerStyleProp,
     inputContainerStyle: inputContainerStyleProp,
+    inputStyle: inputStyleProp,
     errorStyle: errorStyleProp,
     field: { name, value },
     form: { handleChange, handleBlur, errors, touched },
@@ -29,6 +30,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
    */
   const containerStyle = { ...style.container, ...(containerStyleProp as any) };
   const inputContainerStyle = { ...style.inputContainer, ...(inputContainerStyleProp as any) };
+  const inputStyle = { ...style.inputStyle, ...(inputStyleProp as any) };
   const errorStyle = { ...style.errorMessageStyle, ...(errorStyleProp as any) };
 
   return (
@@ -36,6 +38,7 @@ export const CommonInput: React.FC<Props> = React.memo((props) => {
       value={value && String(value)}
       containerStyle={containerStyle}
       inputContainerStyle={{ ...inputContainerStyle, ...(isError ? style.inputErrorContainer : {}) }}
+      inputStyle={inputStyle}
       placeholderTextColor={isError ? ColorVariables.error : ColorVariables.lightTeal}
       onChangeText={handleChange(name)}
       onBlur={handleBlur(name)}
